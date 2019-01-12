@@ -13,6 +13,7 @@ cd fluentd-influxdb-grafana
 docker-compose up
 ```
 
+### Fluentd
 fluentd will look for json log in `logs/logs.json` and push them into influxdb.
 
 Use the following command to push a dummy data
@@ -20,4 +21,16 @@ Use the following command to push a dummy data
 echo \{\"time\":$(date +"%s"),\"foo\":\"foo\",\"bar\":42\} >> logs/logs.json
 ```
 
-You can browse grafana using http://localhost:3000/, login:admin and password:admin
+### InfluxDB
+The InfluxDB exposes a shared volume for the data, it uses the folder  `./data/` per default.
+
+### Grafana
+You can browse grafana using http://localhost:3000/
+- Username: admin
+- Password: admin
+
+Select the influxdb datasource and use the following configuration:
+- URL: http://influxdb:8086
+- Database: test
+- User: admin
+- Password: admin
