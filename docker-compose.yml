@@ -1,0 +1,26 @@
+version: '3'
+services:
+  grafana:
+    image: grafana/grafana
+    ports:
+      - '3000:3000'
+    depends_on:
+      - influxdb
+  fluentd:
+    image: fluentd-influxdb
+    build: ./fluentd
+    ports:
+      - '24224:24224'
+    volumes:
+      - './fluentd/fluent.conf:/fluentd/etc/fluent.conf'
+      - './logs/:/var/log/'
+  influxdb:
+    image: influxdb
+    ports:
+      - '8086:8086'
+    environment:
+      - INFLUXDB_DB=test
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+    volumes:
+      - './data:/var/lib/influxdb'
