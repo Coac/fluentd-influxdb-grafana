@@ -16,9 +16,9 @@ docker-compose up
 ### Fluentd
 fluentd will look for json log in `logs/logs.json` and push them into influxdb.
 
-Use the following command to push a dummy data
+Use the following command to push dummy data
 ```bash
-echo \{\"time\":$(date +"%s"),\"foo\":\"foo\",\"bar\":42\} >> logs/logs.json
+for i in {1..100}; do echo \{\"time\":$(($(date +"%s")+$i)),\"foo\":\"foo\",\"bar\":$RANDOM\} >> logs/logs.json; done
 ```
 
 ### InfluxDB
